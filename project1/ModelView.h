@@ -14,10 +14,13 @@ class ShaderIF;
 #include <GL/gl.h>
 #endif
 
+typedef float vec2[2];
+typedef float vec3[3];
+
 class ModelView
 {
 public:
-	ModelView();
+	ModelView(vec2*, bool);
 	virtual ~ModelView();
 
 	// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
@@ -29,13 +32,25 @@ public:
 
 private:
 	// TODO: VAO(s), VBO(s), and other relevant INSTANCE variables
+	GLuint vao[1];
+	GLuint vbo[1];
+	vec3 useColor[1];
+
+	double xmin, xmax, ymin, ymax;
+
+	bool isAxis;
+
+	static vec3 color[5];
 
 	// we assume all instances share the same shader program:
 	static ShaderIF* shaderIF;
 	static int numInstances;
 	static GLuint shaderProgram;
-	
+
 	// TODO: add uniform and attribute variable location CLASS variables
+	static GLint ppuLoc_color;
+	static GLint ppuLoc_scaleTrans;
+	static GLint pvaLoc_mcPosition;
 
 	// "pp": "per-primitive"; "pv": "per-vertex"
 	static GLint ppUniformLocation(GLuint glslProgram, const std::string& name);
@@ -61,6 +76,9 @@ private:
 	static void compute2DScaleTrans(float* scaleTrans);
 
 	static double mcRegionOfInterest[6];
+
+	void deleteObject();
+	void initModelGeometry(vec2* points);
 
 	static void fetchGLSLVariableLocations();
 };

@@ -14,6 +14,8 @@ int main(int argc, char* argv[])
 		{ { -6.0, 135.0 }, { 2.0, 135.0 }, { -2.0, 127.0 } }
 	};
 
+	std::cout << vertexPositions[0][0] << std::endl;
+
 	GLFWController c(argv[0]);
 	c.reportVersions(std::cout);
 	c.addModel( new ModelView(vertexPositions[0]) );

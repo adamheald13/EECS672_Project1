@@ -18,18 +18,10 @@ float** Read::readData()
 
 	while (is >> date >> rate1 >> comma >> rate2 >> comma >> rate3 >> comma >> rate4)
 	{
-		std::cout << "adding: " << rate1 << " to vector." << std::endl;
 		rates1.push_back(rate1);
-
-		std::cout << "adding: " << rate2 << " to vector." << std::endl;
 		rates2.push_back(rate2);
-
-		std::cout << "adding: " << rate3 << " to vector." << std::endl;
 		rates3.push_back(rate3);
-
-		std::cout << "adding: " << rate4 << " to vector." << std::endl;
 		rates4.push_back(rate4);
-		//std::cout << date << ' ' << rate1 << ' ' << rate2 << ' ' << rate3 << ' ' << rate4 << '\n';
 	}
 
 	int dataSize = rates1.size();
@@ -41,11 +33,17 @@ float** Read::readData()
 	v[2] = rates3;
 	v[3] = rates4;
 
-	float data[4][dataSize];
+	float** data = 0;
+	data = new float*[4];
 
-	for(int i = 0; i < 4; i++) {
-		for(int j = dataSize - 1; j >= 0; j++) {
-			data[i][j] = v[i].at(j);
+	for(int i = 0; i < 4; i++)
+	{
+		data[i] = new float[dataSize];
+
+		for(int j = 0; j < dataSize; j++)
+		{
+			//reverse order of the data so it may be shown chronologically
+			data[i][(dataSize - 1) - j] = v[i].at(j);
 		}
 	}
 
